@@ -1,9 +1,9 @@
 [build]
 builder = "NIXPACKS"
-buildCommand = "pip install --upgrade pip && pip install -r requirements.txt && prisma generate"
+buildCommand = "cd apps/api && pip install --upgrade pip && pip install -r requirements.txt && prisma generate"
 
 [start]
-cmd = "cd apps/api && python -m uvicorn main:app --host 0.0.0.0 --port $PORT"
+cmd = "python -m uvicorn main:app --host 0.0.0.0 --port $PORT"
 
 [variables]
 PYTHON_VERSION = "3.10"
