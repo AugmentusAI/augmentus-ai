@@ -7,3 +7,4 @@ cmd = "python -m uvicorn main:app --host 0.0.0.0 --port $PORT"
 
 [variables]
 PYTHON_VERSION = "3.10"
+PORT = "8080"
