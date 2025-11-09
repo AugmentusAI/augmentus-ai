@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
+import { API_BASE_URL } from "@/lib/api";
 
 interface Prompt {
   id: number;
@@ -21,7 +22,7 @@ export default function DashboardPage() {
   }, []);
 
   async function loadPrompts() {
-    const res = await fetchWithAuth("http://127.0.0.1:8000/prompts");
+    const res = await fetchWithAuth(`${API_BASE_URL}/prompts`);
     if (res.ok) {
       setPrompts(await res.json());
     }
@@ -30,7 +31,7 @@ export default function DashboardPage() {
   async function addPrompt() {
     if (!newPrompt.trim()) return;
     setLoading(true);
-    await fetchWithAuth("http://127.0.0.1:8000/prompts", {
+    await fetchWithAuth(`${API_BASE_URL}/prompts`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ rawPrompt: newPrompt }),
@@ -41,7 +42,7 @@ export default function DashboardPage() {
   }
 
   async function deletePrompt(id: number) {
-    await fetchWithAuth(`http://127.0.0.1:8000/prompts/${id}`, {
+    await fetchWithAuth(`${API_BASE_URL}/prompts/${id}`, {
       method: "DELETE",
     });
     loadPrompts();
@@ -49,7 +50,7 @@ export default function DashboardPage() {
 
   async function optimizePrompt(id: number) {
     setOptimizingId(id); // 🆕 start indicator
-    const res = await fetchWithAuth(`http://127.0.0.1:8000/optimize/${id}`, {
+    const res = await fetchWithAuth(`${API_BASE_URL}/optimize/${id}`, {
       method: "POST",
     });
     setOptimizingId(null); // 🆕 stop indicator
